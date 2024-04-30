@@ -8,7 +8,24 @@ import org.apache.logging.log4j.Logger;
 public class Game {
     protected static final Logger LOGGER = LogManager.getLogger();
     public static final String STRING_GAME_SEPARATOR = " | ";
+
+    public Symbol[][] getGameValues() {
+        return gameValues;
+    }
+
     private Symbol[][] gameValues = new Symbol[3][3];
+
+    public Game() {
+
+    }
+
+    public Game(Symbol[][] gv) {
+        for(int i=0; i<3; i++) {
+            for(int j=0; j<3; j++) {
+                this.gameValues[i][j] = gv[i][j];
+            }
+        }
+    }
 
 
     @Override
@@ -33,6 +50,8 @@ public class Game {
     }
 
     public boolean isGameComplete() {
+        if(isWiner(Symbol.X)) return true;
+        if(isWiner(Symbol.O)) return true;
         for(int i=0; i<3; i++) {
             for(int j=0; j<3; j++) {
                 if(gameValues[i][j] == null) {
@@ -44,12 +63,14 @@ public class Game {
     }
 
     public boolean isWiner(Symbol player) {
+        boolean win = false;
         for(int i = 0; i<3; i++) {
-            if(gameValues[i][0] == gameValues[i][1] && gameValues[i][0] == gameValues[i][2] && gameValues[i][0] == player) return true;
-            if(gameValues[0][i] == gameValues[1][i] && gameValues[0][i] == gameValues[2][i] && gameValues[0][i] == player) return true;
+            if(gameValues[i][0] == gameValues[i][1] && gameValues[i][0] == gameValues[i][2] && gameValues[i][0] == player) win = true;
+            if(gameValues[0][i] == gameValues[1][i] && gameValues[0][i] == gameValues[2][i] && gameValues[0][i] == player) win = true;
         }
-        if(gameValues[0][0] == gameValues[1][1] && gameValues[0][0] == gameValues[2][2] && gameValues[0][0] == player) return true;
-        if(gameValues[0][2] == gameValues[1][1] && gameValues[0][2] == gameValues[2][2] && gameValues[0][2] == player) return true;
-        return false;
+        if(gameValues[0][0] == gameValues[1][1] && gameValues[0][0] == gameValues[2][2] && gameValues[0][0] == player) win = true;
+        if(gameValues[0][2] == gameValues[1][1] && gameValues[0][2] == gameValues[2][2] && gameValues[0][2] == player) win = true;
+        //if (win) System.out.println(player + " WIN");
+        return win;
     }
 }

@@ -25,15 +25,22 @@ public class GameTest {
         assertThrows(TikTakToeAddElementException.class, () -> game.addElementToGame(0,0, Symbol.X));
     }
     @Test
+    void testIsCompleteTrueWinner() throws Exception {
+        Game game = getGameWithValues(Symbol.X, null, Symbol.O, Symbol.X,Symbol.X, Symbol.O, Symbol.O, Symbol.X, Symbol.X);
+
+        assertTrue(game.isGameComplete());
+    }
+
+    @Test
     void testIsCompleteTrue() throws Exception {
-        Game game = getGameWithValues(Symbol.X, Symbol.X, Symbol.X, Symbol.X,Symbol.O, Symbol.X, Symbol.O, Symbol.X, Symbol.O);
+        Game game = getGameWithValues(Symbol.O, Symbol.X, Symbol.O, Symbol.O,Symbol.X, Symbol.X, Symbol.X, Symbol.O, Symbol.X);
 
         assertTrue(game.isGameComplete());
     }
 
     @Test
     void testIsCompleteFalse() throws Exception {
-        Game game = getGameWithValues(Symbol.X, Symbol.X, Symbol.X, null,Symbol.O, Symbol.X, Symbol.O, Symbol.X, Symbol.O);
+        Game game = getGameWithValues(Symbol.X, Symbol.O, Symbol.X, null,Symbol.O, Symbol.X, Symbol.O, Symbol.X, Symbol.O);
 
         assertFalse(game.isGameComplete());
     }
