@@ -69,7 +69,7 @@ public class Game {
             if(gameValues[0][i] == gameValues[1][i] && gameValues[0][i] == gameValues[2][i] && gameValues[0][i] == player) win = true;
         }
         if(gameValues[0][0] == gameValues[1][1] && gameValues[0][0] == gameValues[2][2] && gameValues[0][0] == player) win = true;
-        if(gameValues[0][2] == gameValues[1][1] && gameValues[0][2] == gameValues[2][2] && gameValues[0][2] == player) win = true;
+        if(gameValues[0][2] == gameValues[1][1] && gameValues[0][2] == gameValues[2][0] && gameValues[0][2] == player) win = true;
         //if (win) System.out.println(player + " WIN");
         return win;
     }

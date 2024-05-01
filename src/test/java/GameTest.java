@@ -2,6 +2,8 @@ import fr.massi.Exceptions.TikTakToeAddElementException;
 import fr.massi.Game;
 import fr.massi.models.Symbol;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import org.junit.jupiter.api.*;
 
 public class GameTest {
@@ -58,6 +60,14 @@ public class GameTest {
 
         assertFalse(game.isWiner(Symbol.O));
         assertTrue(game.isWiner(Symbol.X));
+    }
+
+    @Test
+    void testIsWinnerThree() throws Exception {
+        Game game = getGameWithValues(Symbol.X, null, Symbol.O, Symbol.X,Symbol.O, null, Symbol.X, null, Symbol.O);
+        System.out.println(game);
+        assertTrue(game.isWiner(Symbol.X));
+        assertFalse(game.isWiner(Symbol.O));
     }
 
 

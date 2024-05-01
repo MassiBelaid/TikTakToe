@@ -1,7 +1,7 @@
 package fr.massi;
 
 import fr.massi.Exceptions.TikTakToeAddElementException;
-import fr.massi.Services.AIService;
+import fr.massi.Services.MinMaxService;
 import fr.massi.models.Symbol;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -15,7 +15,7 @@ public class Application {
     public static void main(String[] args) {
         System.out.println("Game starting");
         Game game = new Game();
-        AIService service = new AIService();
+        MinMaxService service = new MinMaxService();
 
         boolean finish = false;
 
@@ -27,10 +27,14 @@ public class Application {
             if(!finish) {
                 System.out.println("-------------------------------");
                 service.autoPlay(game);
+                finish = game.isGameComplete();
                 System.out.println(game);
             }
         }
 
+        if(game.isWiner(Symbol.O)) System.out.println("O is the winner");
+        else if(game.isWiner(Symbol.X)) System.out.println("X is the winner");
+        else System.out.println("there is no winner");
 
     }
 
