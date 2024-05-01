@@ -12,7 +12,6 @@ public class MinMaxService {
             game.addElementToGame(score.getI(), score.getJ(), Symbol.O);
         } catch (Exception e) {
             System.out.println("unexpected error " + e.getMessage());
-            e.printStackTrace();
         }
     }
 

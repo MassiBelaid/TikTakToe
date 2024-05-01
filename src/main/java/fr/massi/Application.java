@@ -10,8 +10,6 @@ import java.util.Scanner;
 
 public class Application {
 
-    protected static final Logger LOGGER = LogManager.getLogger();
-
     public static void main(String[] args) {
         System.out.println("Game starting");
         Game game = new Game();

@@ -2,16 +2,14 @@ package fr.massi;
 
 import fr.massi.Exceptions.TikTakToeAddElementException;
 import fr.massi.models.Symbol;
+import lombok.Getter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+@Getter
 public class Game {
-    protected static final Logger LOGGER = LogManager.getLogger();
     public static final String STRING_GAME_SEPARATOR = " | ";
 
-    public Symbol[][] getGameValues() {
-        return gameValues;
-    }
 
     private Symbol[][] gameValues = new Symbol[3][3];
 
@@ -21,9 +19,7 @@ public class Game {
 
     public Game(Symbol[][] gv) {
         for(int i=0; i<3; i++) {
-            for(int j=0; j<3; j++) {
-                this.gameValues[i][j] = gv[i][j];
-            }
+            for(int j=0; j<3; j++) this.gameValues[i][j] = gv[i][j];
         }
     }
 
