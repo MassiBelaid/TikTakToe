@@ -6,16 +6,16 @@ import fr.massi.models.Symbol;
 
 public class MinMaxService {
 
-    public void autoPlay(Game game) {
+    public void autoPlay(Game game, Symbol symbol) {
         try {
-            MinMaxNode score = maxIteration(game);
+            MinMaxNode score = maxIteration(game, symbol);
             game.addElementToGame(score.getI(), score.getJ(), Symbol.O);
         } catch (Exception e) {
             System.out.println("unexpected error " + e.getMessage());
         }
     }
 
-    private MinMaxNode maxIteration(Game game) throws Exception{
+    private MinMaxNode maxIteration(Game game, Symbol symbol) throws Exception{
         if(game.isWiner(Symbol.O)) return new MinMaxNode(null, null, 1);
         if(game.isWiner(Symbol.X)) return new MinMaxNode(null, null, -1);
         if(game.isGameComplete()) return new MinMaxNode(null, null, 0);
@@ -24,8 +24,8 @@ public class MinMaxService {
             for(int j=0; j<3; j++) {
                 if(game.getGameValues()[i][j]  == null) {
                     Game gameCopy = new Game(game.getGameValues());
-                    gameCopy.addElementToGame(i, j , Symbol.O);
-                    MinMaxNode score = minIteration(gameCopy);
+                    gameCopy.addElementToGame(i, j , symbol);
+                    MinMaxNode score = minIteration(gameCopy, symbol);
                     if(minMaxNode.getValue() < score.getValue()) {
                         minMaxNode.setValue(score.getValue());
                         minMaxNode.setI(i);
@@ -38,7 +38,7 @@ public class MinMaxService {
     }
 
 
-    private MinMaxNode minIteration(Game game) throws Exception{
+    private MinMaxNode minIteration(Game game, Symbol symbol) throws Exception{
         if(game.isWiner(Symbol.O)) return new MinMaxNode(null, null, 1);
         if(game.isWiner(Symbol.X)) return new MinMaxNode(null, null, -1);
         if(game.isGameComplete()) return new MinMaxNode(null, null, 0);
@@ -47,8 +47,8 @@ public class MinMaxService {
             for(int j=0; j<3; j++) {
                 if(game.getGameValues()[i][j]  == null) {
                     Game gameCopy = new Game(game.getGameValues());
-                    gameCopy.addElementToGame(i, j , Symbol.X);
-                    MinMaxNode score = maxIteration(gameCopy);
+                    gameCopy.addElementToGame(i, j , getNextSymbol(symbol));
+                    MinMaxNode score = maxIteration(gameCopy, symbol);
                     if(minMaxNode.getValue() > score.getValue()) {
                         minMaxNode.setValue(score.getValue());
                         minMaxNode.setI(i);
@@ -58,5 +58,9 @@ public class MinMaxService {
             }
         }
         return minMaxNode;
+    }
+
+    public Symbol getNextSymbol(Symbol symbol) {
+        return symbol == Symbol.X ? Symbol.O : Symbol.X;
     }
 }

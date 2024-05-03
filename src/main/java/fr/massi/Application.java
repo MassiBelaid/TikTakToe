@@ -2,6 +2,8 @@ package fr.massi;
 
 import fr.massi.Exceptions.TikTakToeAddElementException;
 import fr.massi.Services.MinMaxService;
+import fr.massi.models.GameParampeter;
+import fr.massi.models.PlayerType;
 import fr.massi.models.Symbol;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -13,18 +15,18 @@ public class Application {
     public static void main(String[] args) {
         System.out.println("Game starting");
         Game game = new Game();
-        MinMaxService service = new MinMaxService();
+        GameParampeter gameParampeter = GameParampeter.initGame();
 
         boolean finish = false;
 
         System.out.println(game);
         while (!finish) {
-            addElement(game);
+            play(game, gameParampeter.getPlayer1(), gameParampeter.getPlayer1Symbol());
             finish = game.isGameComplete();
             System.out.println(game);
             if(!finish) {
                 System.out.println("-------------------------------");
-                service.autoPlay(game);
+                play(game, gameParampeter.getPlayer2(), gameParampeter.getPlayer2Symbol());
                 finish = game.isGameComplete();
                 System.out.println(game);
             }
@@ -36,13 +38,13 @@ public class Application {
 
     }
 
-    public static void addElement(Game game) {
+    public static void addElement(Game game, Symbol symbol) {
         boolean isValid = false;
         while (!isValid) {
             int i = getValueFromInput("Put valid i value");
             int j = getValueFromInput("Put valid j value");
             try {
-                game.addElementToGame(i,j, Symbol.X);
+                game.addElementToGame(i,j, symbol);
                 isValid = true;
             } catch (TikTakToeAddElementException e) {
                 System.out.println("This case is already taken");
@@ -64,5 +66,13 @@ public class Application {
             }
         }
         return Integer.parseInt(value);
+    }
+
+
+    public static void play(Game game, PlayerType playerType, Symbol symbol) {
+        if(PlayerType.PERSON == playerType)
+            addElement(game, symbol);
+        else
+            new MinMaxService().autoPlay(game, symbol);
     }
 }
